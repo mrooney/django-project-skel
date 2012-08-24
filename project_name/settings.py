@@ -1,10 +1,11 @@
 # Global settings for {{ project_name }} project.
 import os
+import sys
 
 PROJECT_DIR = os.path.dirname(__file__)
 PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
 
-DEBUG = False
+DEBUG = sys.platform == 'darwin'
 TEMPLATE_DEBUG = True
 
 ADMINS = (
@@ -20,7 +21,7 @@ MANAGERS = ADMINS
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -108,6 +109,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.request',
+    '{{ project_name }}.context_processors.processor',
 )
 
 FIXTURE_DIRS = (
@@ -122,6 +124,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'south',
+    'gunicorn',
 )
 
 # A sample logging configuration. The only tangible logging

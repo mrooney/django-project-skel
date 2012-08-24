@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/reset.css"/>
+        {% block extra_css %}{% endblock %}
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements. MUST BE BEFORE BODY -->
+        <!--[if lt IE 9]>
+            <script src="/static/js/html5.js"></script>
+        <![endif]-->
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        <div class="navbar navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+              <a class="brand" href="/">DSLO</a>
+              <div class="nav-collapse">
+                <ul class="nav">
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/search">Search</a></li>
+                  <li><a href="/faq">FAQ</a></li>
+                  <li><a href="http://www.afdo.org">AFDO</a></li>
+                  <li><a href="http://www.afdo.org/contact">Contact</a></li>
+                </ul>
+              </div><!--/.nav-collapse -->
+            </div>
+          </div>
+        </div>
+
+        <div class="container" id="main" role="main">
+            {% block content %}{% endblock %}
+        </div>
+
+        <script src="/static/js/jquery-1.7.2.min.js"></script>
+        <script src="/static/js/dslo.js"></script>
+        <script src="/static/js/map/raphael-min.js"></script>
+        <script src="/static/js/map/us-map-svg.js"></script>
+        <script src="/static/js/map/dslo.js"></script>
+        {% block extra_js %}{% endblock %}
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-33499070-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+
+        </script>
+    </body>
+</html>

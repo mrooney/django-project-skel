@@ -1,1 +1,11 @@
-django>=1.4
+# base requirements:
+django==1.4.1
+Coffin
+jinja2
+South
+gevent
+gunicorn
+raven
+python-cjson
+lxml
+# add your application-specific requirements here:

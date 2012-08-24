@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from coffin.conf.urls.defauts import *
 from django.contrib import admin
 
 admin.autodiscover()
