@@ -8,4 +8,5 @@ gunicorn
 raven
 python-cjson
 lxml
+bpython
 # add your application-specific requirements here:
