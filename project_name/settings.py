@@ -6,6 +6,7 @@ PROJECT_DIR = os.path.dirname(__file__)
 PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
 
 DEBUG = sys.platform == 'darwin'
+TESTING = 'test' in sys.argv
 TEMPLATE_DEBUG = True
 
 ADMINS = (
@@ -127,6 +128,12 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
 )
+if not (DEBUG or TESTING):
+    INSTALLED_APPS += (
+        'raven.contrib.django',
+    )
+
+SENTRY_DSN = 'https://97075d2f458d4460a0315e4032f3c71a:fe3dba4ebc4b40fc9c1b0bc935188363@app.getsentry.com/926'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
