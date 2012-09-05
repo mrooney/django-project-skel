@@ -9,7 +9,7 @@ SERVICES = {
     "gunicorn":
         {
             "port": 18650,
-            "before": ["python", "manage.py", "collectstatic", "--clear", "--noinput"],
+            "before": ["python", "manage.py", "collectstatic", "--noinput"],
             "start": ["gunicorn", "-D", "-c", "settings_gunicorn.py", "{{ project_name }}.wsgi:application"],
             "restart": ["kill", "-s", "SIGHUP", "{pid}"],
         },
