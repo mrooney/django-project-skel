@@ -24,12 +24,8 @@ http {{
             return 204;
         }}
 
-        location /static/admin {{
-            alias {project_dir}/../env/lib/python2.7/site-packages/django/contrib/admin/static/admin/;
-        }}
-
         location /static/ {{
-            alias {project_dir}/static/;
+            alias {project_dir}/public/static/;
         }}
 
         location / {{

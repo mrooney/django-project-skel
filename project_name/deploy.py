@@ -6,10 +6,11 @@ import subprocess
 from settings_deploy import SERVICES
 
 class Service(object):
-    def __init__(self, name, port=None, cwd=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
+    def __init__(self, name, port=None, cwd=None, before=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
         self.name = name
         self.port = port
         self.cwd = cwd
+        self.before_cmd = before or False
         self.start_cmd = start
         self.restart_cmd = restart or False
         self.stop_cmd = stop or ["kill", "{pid}"]
@@ -31,7 +32,7 @@ class Service(object):
             results = subprocess.check_output(["/usr/sbin/lsof", "-i", ":%i"%self.port]).splitlines()[1:]
         except subprocess.CalledProcessError:
             return None
-        procs = [int(re.findall("\w+", r)[1]) for r in results if "(LISTEN)" in r]
+        procs = [int(re.findall("[\w-]+", r)[1]) for r in results if "(LISTEN)" in r]
         parent = sorted(procs)[0]
         return parent
 
@@ -54,13 +55,19 @@ class Service(object):
             runner = subprocess.Popen
         return runner(subproc_cmd, cwd=self.cwd)
 
+    def before(self):
+        if self.before_cmd is not False:
+            print self.run(self.before_cmd)
+
     def start(self):
         print "Starting %s:" % self.name,
+        self.before()
         print self.run(self.start_cmd)
 
     def restart(self):
         if self.restart_cmd:
             print "Restarting %s:" % self.name,
+            self.before()
             print self.run(self.restart_cmd)
         else:
             print "Ignoring %s, not configured to restart" % self.name
