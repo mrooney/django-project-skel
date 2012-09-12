@@ -6,9 +6,10 @@ import subprocess
 from settings_deploy import SERVICES
 
 class Service(object):
-    def __init__(self, name, port=None, cwd=None, before=None, after=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
+    def __init__(self, name, port=None, pidfile=None, cwd=None, before=None, after=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
         self.name = name
         self.port = port
+        self.pidfile = pidfile
         self.cwd = cwd
         self.before_cmd = before or False
         self.after_cmd = after or False
@@ -19,18 +20,36 @@ class Service(object):
         self.daemonizes = daemonizes
         self.templates = templates or []
 
-    def get_default_context(self):
+    def get_default_context(self, withpid=True):
         context = {
             'project_dir': os.path.abspath(os.path.dirname(__file__)),
-            'pid': self.get_pid(),
+            'pid': self.get_pid() if withpid else None,
         }
         context.update(self.__dict__)
         context.update(self.context)
         return context
+    
+    def format(self, strng, *args, **kwargs):
+        return strng.format(**self.get_default_context(*args, **kwargs))
 
     def get_pid(self):
+        if self.port:
+            return self.get_pid_from_port()
+        elif self.pidfile:
+            return self.get_pid_from_file()
+        else:
+            raise Exception("Please specify either port or pidfile for service: " % self.name)
+
+    def get_pid_from_file(self):
         try:
-            results = subprocess.check_output(["/usr/sbin/lsof", "-i", ":%i"%self.port]).splitlines()[1:]
+            return int(open(self.format(self.pidfile, withpid=False)).read().strip())
+        except IOError:
+            return None
+
+    def get_pid_from_port(self):
+        try:
+            path = "/usr/bin:/usr/sbin"
+            results = subprocess.check_output(["lsof", "-i", ":%i"%self.port], env={"PATH": path}).splitlines()[1:]
         except subprocess.CalledProcessError:
             return None
         procs = [int(re.findall("[\w-]+", r)[1]) for r in results if "(LISTEN)" in r]
@@ -44,10 +63,7 @@ class Service(object):
         for template in self.templates:
             Template(template).render(self)
 
-        subproc_cmd = []
-        for arg in cmd:
-            arg = arg.format(**self.get_default_context())
-            subproc_cmd.append(arg)
+        subproc_cmd = [self.format(arg) for arg in cmd]
 
         print " ".join(subproc_cmd)
         if self.daemonizes:
