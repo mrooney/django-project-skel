@@ -6,11 +6,12 @@ import subprocess
 from settings_deploy import SERVICES
 
 class Service(object):
-    def __init__(self, name, port=None, cwd=None, before=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
+    def __init__(self, name, port=None, cwd=None, before=None, after=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
         self.name = name
         self.port = port
         self.cwd = cwd
         self.before_cmd = before or False
+        self.after_cmd = after or False
         self.start_cmd = start
         self.restart_cmd = restart or False
         self.stop_cmd = stop or ["kill", "{pid}"]
@@ -59,16 +60,22 @@ class Service(object):
         if self.before_cmd is not False:
             print self.run(self.before_cmd)
 
+    def after(self):
+        if self.after_cmd is not False:
+            print self.run(self.after_cmd)
+
     def start(self):
         print "Starting %s:" % self.name,
         self.before()
         print self.run(self.start_cmd)
+        self.after()
 
     def restart(self):
         if self.restart_cmd:
             print "Restarting %s:" % self.name,
             self.before()
             print self.run(self.restart_cmd)
+            self.after()
         else:
             print "Ignoring %s, not configured to restart" % self.name
 
