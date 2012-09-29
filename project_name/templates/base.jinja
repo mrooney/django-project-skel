@@ -9,8 +9,10 @@
         {% block extra_css %}{% endblock %}
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements. MUST BE BEFORE BODY -->
+        <!-- We also include respond.js so bootstrap-responsive works in IE6-8 -->
         <!--[if lt IE 9]>
             <script src="/static/js/html5.js"></script>
+            <script src="/static/js/respond.min.js"></script>
         <![endif]-->
     </head>
     <body class="{% block body_class %}{% endblock %}">
