@@ -135,7 +135,7 @@ if not (DEBUG or TESTING):
         'raven.contrib.django',
     )
 
-SENTRY_DSN = 'https://97075d2f458d4460a0315e4032f3c71a:fe3dba4ebc4b40fc9c1b0bc935188363@app.getsentry.com/926'
+SENTRY_DSN = open(os.path.join(PROJECT_DIR, '../', 'sentry.dsn')).read()
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

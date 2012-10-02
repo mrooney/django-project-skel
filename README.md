@@ -10,6 +10,10 @@
 Create a virtual python environment for the project.
 If you're not using virtualenv or virtualenvwrapper you may skip this step.
 
+mv manage.py website/
+update nginx/gunicorn ports in settings_deploy.py, nginx.conf.template,
+and settings_gunicorn.py
+
 #### For virtualenvwrapper ####
 ```bash
 mkvirtualenv --no-site-packages {{ project_name }}-env
