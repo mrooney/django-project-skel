@@ -9,4 +9,5 @@ raven
 python-cjson
 lxml
 bpython
+django_compressor
 # add your application-specific requirements here:

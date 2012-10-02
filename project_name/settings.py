@@ -73,6 +73,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -127,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'gunicorn',
+    'compressor',
 )
 if not (DEBUG or TESTING):
     INSTALLED_APPS += (
