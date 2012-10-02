@@ -3,7 +3,8 @@ import os
 import sys
 
 PROJECT_DIR = os.path.dirname(__file__)
-PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
+WEBSITE_DIR = os.path.dirname(PROJECT_DIR)
+PUBLIC_DIR = os.path.join(WEBSITE_DIR, 'public')
 
 DEBUG = sys.platform == 'darwin'
 TESTING = 'test' in sys.argv
@@ -135,7 +136,7 @@ if not (DEBUG or TESTING):
         'raven.contrib.django',
     )
 
-SENTRY_DSN = open(os.path.join(PROJECT_DIR, '../', 'sentry.dsn')).read()
+SENTRY_DSN = open(os.path.join(WEBSITE_DIR, 'sentry.dsn')).read()
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

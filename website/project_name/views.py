@@ -14,3 +14,5 @@ def json_response(func):
         return HttpResponse(cjson.encode(func(*args, **kwargs)), mimetype="application/json")
     return decorated
 
+def home(request):
+    return r2r("index.jinja", request)

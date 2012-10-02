@@ -1,3 +1,4 @@
+env
 # OS
 .DS_Store
 
@@ -15,5 +16,5 @@ atlassian-ide-plugin.xml
 
 # Project
 #/{{ project_name }}/local_settings.py
-/{{ project_name }}/public/static
-/{{ project_name }}/public/media
+/website/public/static
+/website/public/media

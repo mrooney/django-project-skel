@@ -18,6 +18,12 @@ DATABASES = {
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 
+JINJA2_EXTENSIONS = [
+    'compressor.contrib.jinja2ext.CompressorExtension',
+]
+COMPRESS_ENABLED = True
+COMPRESS_PARSER = 'compressor.parser.LxmlParser'
+
 if DEBUG:
     # Show emails in the console during developement.
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

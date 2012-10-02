@@ -10,4 +10,5 @@ python-cjson
 lxml
 bpython
 django_compressor
+BeautifulSoup<4.0
 # add your application-specific requirements here:
