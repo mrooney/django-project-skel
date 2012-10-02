@@ -1,0 +1,3 @@
+o Latest version of Django/Gunicorn in requirements.txt
+o Latest version of jQuery and Bootstrap in base.html
+
