@@ -18,3 +18,5 @@ atlassian-ide-plugin.xml
 #/{{ project_name }}/local_settings.py
 /website/public/static
 /website/public/media
+*.db
+nginx.conf
