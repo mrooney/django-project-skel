@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
     'compressor',
+    '{{ project_name }}',
 )
 if not (DEBUG or TESTING):
     INSTALLED_APPS += (
