@@ -1,4 +1,6 @@
 from coffin.shortcuts import render_to_response
+from django.contrib.auth import authenticate, logout as logout_user, login as login_user
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from django.shortcuts import redirect
@@ -16,3 +18,53 @@ def json_response(func):
 
 def home(request):
     return r2r("index.jinja", request)
+
+def login(request):
+    def failure(error_msg):
+        return r2r("login.jinja", request, locals())
+
+    if request.method == "GET":
+        return r2r("login.jinja", request, locals())
+    else:
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(username=email, password=password)
+        if user is not None:
+            if user.is_active:
+                login_user(request, user)
+                # Redirect to a success page.
+                return redirect("/")
+            else:
+                # Return a 'disabled account' error message
+                return failure("This account has been disabled.")
+        else:
+            # Return an 'invalid login' error message.
+            return failure("Invalid email address or password.")
+
+def logout(request):
+    logout_user(request)
+    return redirect("home")
+
+def signup(request):
+    decks = models.DECKS
+
+    if request.method == "GET":
+        return r2r("signup.jinja", request, locals())
+    else:
+        email = request.POST['email']
+        password = request.POST['password']
+        if not email_re.match(email):
+            error_msg = "Please enter a valid email address."
+            return r2r("signup.jinja", request, locals())
+        if len(password) < 6:
+            error_msg = "Please enter a password of at least 6 characters."
+            return r2r("signup.jinja", request, locals())
+        if User.objects.filter(email=email).count():
+            error_msg = "An account with this email address already exists."
+            return r2r("signup.jinja", request, locals())
+
+        user = User.objects.create_user(email, password=password)
+        user.save()
+        user = authenticate(username=email, password=password)
+        login_user(request, user)
+        return redirect("/")

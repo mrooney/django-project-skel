@@ -6,7 +6,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^$', '{{ project_name.views.home }}'),
-    # there's a login one too that takes a template
-    url(r'^logout/', 'django.contrib.auth.views.logout'),
+    url(r'^$', '{{project_name}}.views.home', name="home"),
+    url(r'^login/', '{{project_name}}.views.login', name="login"),
+    url(r'^logout/', '{{project_name}}.views.logout', name="logout"),
+    url(r'^signup/', '{{project_name}}.views.signup', name="signup"),
 )
