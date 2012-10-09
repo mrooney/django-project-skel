@@ -33,7 +33,7 @@ def login(request):
             if user.is_active:
                 login_user(request, user)
                 # Redirect to a success page.
-                return redirect("/")
+                return redirect("home")
             else:
                 # Return a 'disabled account' error message
                 return failure("This account has been disabled.")
@@ -67,4 +67,4 @@ def signup(request):
         user.save()
         user = authenticate(username=email, password=password)
         login_user(request, user)
-        return redirect("/")
+        return redirect("home")
