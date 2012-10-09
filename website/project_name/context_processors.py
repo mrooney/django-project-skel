@@ -11,6 +11,7 @@ def processor(request):
             'len': len,
             'str': str,
             'dir': dir,
+            'zip': zip,
     }
     return context
 
