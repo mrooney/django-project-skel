@@ -3,6 +3,8 @@ import os
 import re
 import subprocess
 
+import psutil
+
 from settings_deploy import SERVICES
 
 class Service(object):
@@ -53,7 +55,8 @@ class Service(object):
         except subprocess.CalledProcessError:
             return None
         procs = [int(re.findall("[\w-]+", r)[1]) for r in results if "(LISTEN)" in r]
-        parent = sorted(procs)[0]
+        # Assume the oldest process is the parent/master process.
+        parent = sorted(procs, key=lambda p: psutil.Process(p).create_time)[0]
         return parent
 
     def is_running(self):
