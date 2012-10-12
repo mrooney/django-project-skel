@@ -8,6 +8,7 @@ gunicorn
 raven
 python-cjson
 lxml
+cssselect
 bpython
 django_compressor
 BeautifulSoup<4.0

@@ -26,13 +26,16 @@ class ExtendedTestCase(django.test.TestCase):
         self.assertEqual(status, response.status_code)
         
     @classmethod
-    def get_client(cls):
-        return Client()
+    def get_client(cls, user=None):
+        client = Client()
+        if user:
+            client.login(username=user.username, password="foobar")
+        return client
     
     @classmethod
-    def _http_verb(cls, verb, path, client=None, data=None, https=False, **kwargs):
+    def _http_verb(cls, verb, path, client=None, data=None, https=False, user=None, **kwargs):
         data = data or {}
-        client = client or cls.get_client()
+        client = client or cls.get_client(user)
         kwargs['HTTP_X_FORWARDED_PROTO'] = 'https' if https else 'http' # Simulates ELB
         response = getattr(client, verb.lower())(path, data=data, **kwargs)
         if response.status_code not in [200, 302]:

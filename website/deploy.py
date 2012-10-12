@@ -62,11 +62,11 @@ class Service(object):
     def is_running(self):
         return bool(self.get_pid())
 
-    def run(self, cmd):
+    def run(self, cmd, **kwargs):
         for template in self.templates:
             Template(template).render(self)
 
-        subproc_cmd = [self.format(arg) for arg in cmd]
+        subproc_cmd = [self.format(arg, **kwargs) for arg in cmd]
 
         print " ".join(subproc_cmd)
         if self.daemonizes:
@@ -81,7 +81,8 @@ class Service(object):
 
     def after(self):
         if self.after_cmd is not False:
-            print self.run(self.after_cmd)
+            # pid is not available in after_cmd, as it may be in flux / racey.
+            print self.run(self.after_cmd, withpid=False)
 
     def start(self):
         print "Starting %s:" % self.name,
