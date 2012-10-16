@@ -77,31 +77,31 @@ class Service(object):
 
     def before(self):
         if self.before_cmd is not False:
-            print self.run(self.before_cmd)
+            self.run(self.before_cmd)
 
     def after(self):
         if self.after_cmd is not False:
             # pid is not available in after_cmd, as it may be in flux / racey.
-            print self.run(self.after_cmd, withpid=False)
+            self.run(self.after_cmd, withpid=False)
 
     def start(self):
         print "Starting %s:" % self.name,
         self.before()
-        print self.run(self.start_cmd)
+        self.run(self.start_cmd)
         self.after()
 
     def restart(self):
         if self.restart_cmd:
             print "Restarting %s:" % self.name,
             self.before()
-            print self.run(self.restart_cmd)
+            self.run(self.restart_cmd)
             self.after()
         else:
             print "Ignoring %s, not configured to restart" % self.name
 
     def stop(self):
         print "Stopping %s:" % self.name,
-        print self.run(self.stop_cmd)
+        self.run(self.stop_cmd)
 
 class Template(object):
     def __init__(self, filename):
