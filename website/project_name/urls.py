@@ -11,3 +11,8 @@ urlpatterns = patterns('',
     url(r'^logout/', '{{project_name}}.views.logout', name="logout"),
     url(r'^signup/', '{{project_name}}.views.signup', name="signup"),
 )
+
+# Don't require collectstatic for development.
+if settings.DEBUG:
+    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+    urlpatterns += staticfiles_urlpatterns()
