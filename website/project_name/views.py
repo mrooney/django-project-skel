@@ -1,6 +1,7 @@
 from coffin.shortcuts import render_to_response
 from django.contrib.auth import authenticate, logout as logout_user, login as login_user
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from django.shortcuts import redirect
@@ -10,6 +11,13 @@ import cjson
 def r2r(template, request, data=None):
     data = data or {}
     return render_to_response(template, data, context_instance=RequestContext(request))
+
+def superuser_required(function):
+    def _inner(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+        return function(request, *args, **kwargs)
+    return _inner
 
 def json_response(func):
     def decorated(*args, **kwargs):
