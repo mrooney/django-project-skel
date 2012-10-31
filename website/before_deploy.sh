@@ -1,4 +1,4 @@
 #!/bin/bash
 set -ex
-pip install -qr ../requirements.txt
+pip install -r ../requirements.txt
 python manage.py collectstatic --noinput

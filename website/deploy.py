@@ -34,6 +34,14 @@ class Service(object):
     def format(self, strng, *args, **kwargs):
         return strng.format(**self.get_default_context(*args, **kwargs))
 
+    def check_pid(self, pid):
+        try:
+            os.kill(pid, 0)
+        except OSError:
+            return False
+        else:
+            return True
+
     def get_pid(self):
         if self.port:
             return self.get_pid_from_port()
@@ -43,10 +51,15 @@ class Service(object):
             raise Exception("Please specify either port or pidfile for service: " % self.name)
 
     def get_pid_from_file(self):
+        pid = None
         try:
-            return int(open(self.format(self.pidfile, withpid=False)).read().strip())
+            pid = int(open(self.format(self.pidfile, withpid=False)).read().strip())
         except IOError:
-            return None
+            pass
+
+        # Make sure a process with this pid actually exists.
+        if pid and self.check_pid(pid):
+            return pid
 
     def get_pid_from_port(self):
         try:
