@@ -9,9 +9,9 @@ SERVICES = {
     "gunicorn":
         {
             "port": 14449,
-            "before": ["bash", "before_deploy.sh"],
+            "before": ["./before_deploy.sh"],
             "start": ["gunicorn", "-D", "-c", "settings_gunicorn.py", "{{ project_name }}.wsgi:application"],
-            "after": ["bash", "after_deploy.sh"],
+            "after": ["./after_deploy.sh"],
             "restart": ["kill", "-s", "SIGHUP", "{pid}"],
         },
 }
