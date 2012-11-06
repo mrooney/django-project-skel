@@ -20,3 +20,4 @@ atlassian-ide-plugin.xml
 /website/public/media
 *.db
 nginx.conf
+uploads
