@@ -130,6 +130,7 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
     'compressor',
+    'django_nose',
     '{{ project_name }}',
 )
 if not (DEBUG or TESTING):
@@ -137,6 +138,7 @@ if not (DEBUG or TESTING):
         'raven.contrib.django',
     )
 
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 SENTRY_DSN = open(os.path.join(WEBSITE_DIR, 'sentry.dsn')).read()
 
 # A sample logging configuration. The only tangible logging

@@ -1,4 +1,4 @@
 #!/bin/bash
-set -ex
+set -e
 python manage.py syncdb --migrate
 python manage.py test {{ project_name }}

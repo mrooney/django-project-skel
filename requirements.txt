@@ -12,4 +12,5 @@ cssselect
 bpython
 django_compressor
 BeautifulSoup<4.0
+django-nose
 # add your application-specific requirements here:
