@@ -27,3 +27,10 @@ COMPRESS_PARSER = 'compressor.parser.LxmlParser'
 if DEBUG:
     # Show emails in the console during developement.
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+    EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+    EMAIL_PORT = 465
+    EMAIL_HOST_USER = 'YOUR_SMTP_USERNAME'
+    EMAIL_HOST_PASSWORD = 'YOUR_SMTP_PASSWORD'
+    EMAIL_USE_TLS = True
