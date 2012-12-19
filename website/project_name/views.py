@@ -54,8 +54,6 @@ def logout(request):
     return redirect("home")
 
 def signup(request):
-    decks = models.DECKS
-
     if request.method == "GET":
         return r2r("signup.jinja", request, locals())
     else:

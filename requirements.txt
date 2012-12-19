@@ -10,6 +10,7 @@ python-cjson
 lxml
 cssselect
 bpython
+psutil
 django_compressor
 BeautifulSoup<4.0
 django-nose
