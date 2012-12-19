@@ -21,6 +21,6 @@ class {{ project_name }}Tests(ExtendedTestCase):
 
     def test_signup(self):
         self.assertStatus(200, '/signup/')
-        user = signup_user()
+        user = self.signup_user()
         self.assertEqual(1, user.id)
 

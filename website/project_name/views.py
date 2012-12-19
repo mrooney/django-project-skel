@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, logout as logout_user, login as lo
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
+from django.core.validators import email_re
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
 from django.shortcuts import redirect
 from django.template import RequestContext
