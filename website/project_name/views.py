@@ -66,11 +66,11 @@ def signup(request):
         if len(password) < 6:
             error_msg = "Please enter a password of at least 6 characters."
             return r2r("signup.jinja", request, locals())
-        if User.objects.filter(email=email).count():
+        if User.objects.filter(username=email).count():
             error_msg = "An account with this email address already exists."
             return r2r("signup.jinja", request, locals())
 
-        user = User.objects.create_user(email, password=password)
+        user = User.objects.create_user(email, email, password=password)
         user.save()
         user = authenticate(username=email, password=password)
         login_user(request, user)
