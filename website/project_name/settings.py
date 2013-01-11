@@ -141,6 +141,20 @@ if not (DEBUG or TESTING):
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 SENTRY_DSN = open(os.path.join(WEBSITE_DIR, 'sentry.dsn')).read()
 
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'POPULATE ME'
+EMAIL_HOST_PASSWORD = 'ME TOO'
+EMAIL_USE_TLS = True
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = "mrooney@gmail.com"
+else:
+    # This must be verified in AWS via an email or domain verification.
+    DEFAULT_FROM_EMAIL = "contact@website.com"
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
