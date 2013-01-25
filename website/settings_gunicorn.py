@@ -1,4 +1,4 @@
-bind = "127.0.0.1:18650"
+bind = "127.0.0.1:{port}"
 pidfile = "./run/gunicorn.pid"
 logfile = "./run/gunicorn.log"
 loglevel = "info"

@@ -20,4 +20,5 @@ atlassian-ide-plugin.xml
 /website/public/media
 *.db
 nginx.conf
+settings_gunicorn.py
 uploads
