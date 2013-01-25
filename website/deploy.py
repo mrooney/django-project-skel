@@ -126,7 +126,7 @@ class Template(object):
     def render(self, service):
         context = service.get_default_context()
 
-        full_path = os.path.join(context['project_dir'], self.filename)
+        full_path = os.path.join(self.filename.format(**context))
         templated_path = os.path.splitext(full_path)[0]
 
         contents = open(full_path).read().decode("utf8")
