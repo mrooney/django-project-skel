@@ -75,3 +75,22 @@ def signup(request):
         user = authenticate(username=email, password=password)
         login_user(request, user)
         return redirect("home")
+
+@login_required
+def account(request):
+    profile = request.user.get_profile()
+
+    if request.method == "POST":
+        pw1 = request.POST['password1']
+        pw2 = request.POST['password2']
+
+        if pw1 or pw2:
+            if pw1 == pw2:
+                request.user.set_password(pw1)
+                request.user.save()
+            else:
+                error = "Passwords do not match."
+        message = "Settings successfully updated."
+
+    return r2r("settings.jinja", request, locals())
+

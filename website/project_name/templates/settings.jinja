@@ -1,0 +1,33 @@
+{% extends "base.jinja" %}
+{% block body_class %}settings{% endblock %}
+{% block content %}
+    <h1>Settings</h1>
+    <div class="container well">
+        {% if error %}
+            <p class="text-error">{{ error }}</p>
+        {% elif message %}
+            <p class="text-success">{{ message }}</p>
+        {% endif %}
+        <form class="form-horizontal" action="{% url settings %}" method="post">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="password1">Change Password:</label>
+                <div class="controls">
+                    <input type="password" name="password1" id="password1"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password2">Confirm Password:</label>
+                <div class="controls">
+                    <input type="password" name="password2" id="password2"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

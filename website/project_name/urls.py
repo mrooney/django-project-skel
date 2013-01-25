@@ -4,16 +4,17 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+app_urls = (
+    url(r'^%s/'%name, '{{project_name}}.views.%s'%name, name=name) for name in (
+        'login',
+        'logout',
+        'signup',
+        'account',
+    )
+)
+
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', '{{project_name}}.views.home', name="home"),
-    url(r'^login/', '{{project_name}}.views.login', name="login"),
-    url(r'^logout/', '{{project_name}}.views.logout', name="logout"),
-    url(r'^signup/', '{{project_name}}.views.signup', name="signup"),
 )
-
-# Don't require collectstatic for development.
-if settings.DEBUG:
-    from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-    urlpatterns += staticfiles_urlpatterns()
