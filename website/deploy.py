@@ -21,7 +21,7 @@ class Service(object):
         self.context = context or {}
         self.daemonizes = daemonizes
         self.templates = templates or []
-        self.__dict__.update(**kwargs)
+        self.__dict__.update(kwargs)
 
     def get_default_context(self, withpid=True):
         context = {
