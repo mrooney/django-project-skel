@@ -17,4 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', '{{project_name}}.views.home', name="home"),
+    url(r'^email/confirm/(?P<token>[\w-]{36})/$', '{{project_name}}.views.email_confirm', name="email_confirm"),
+
+    *app_urls
 )
