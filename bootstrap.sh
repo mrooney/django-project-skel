@@ -9,4 +9,6 @@ pip install -r requirements.txt
 mv manage.py website
 chmod +x website/manage.py
 cd website
-./manage.py schemamigration {{projectname}} --initial
+./manage.py schemamigration {{project_name}} --initial
+chmod +x deploy.py
+./deploy.py

@@ -8,7 +8,7 @@ import psutil
 from settings_deploy import SERVICES
 
 class Service(object):
-    def __init__(self, name, port=None, pidfile=None, cwd=None, before=None, after=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None):
+    def __init__(self, name, port=None, pidfile=None, cwd=None, before=None, after=None, start=None, restart=None, stop=None, context=None, daemonizes=True, templates=None, **kwargs):
         self.name = name
         self.port = port
         self.pidfile = pidfile
@@ -21,6 +21,7 @@ class Service(object):
         self.context = context or {}
         self.daemonizes = daemonizes
         self.templates = templates or []
+        self.__dict__.update(**kwargs)
 
     def get_default_context(self, withpid=True):
         context = {
