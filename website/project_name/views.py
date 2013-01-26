@@ -1,4 +1,5 @@
 from coffin.shortcuts import render_to_response
+from django.conf import settings
 from django.contrib.auth import authenticate, logout as logout_user, login as login_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User

@@ -193,3 +193,13 @@ else:
     EMAIL_HOST_USER = 'YOUR_SMTP_USERNAME'
     EMAIL_HOST_PASSWORD = 'YOUR_SMTP_PASSWORD'
     EMAIL_USE_TLS = True
+
+
+AUTH_PROFILE_MODULE = "{{project_name}}.UserProfile"
+LOGIN_URL = "/login"
+
+if DEBUG:
+    WEBSITE_URL = "http://localhost"
+else:
+    WEBSITE_URL = "http://example.com"
+
