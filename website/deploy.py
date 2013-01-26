@@ -124,7 +124,7 @@ class Template(object):
         self.filename = filename
 
     def render(self, service):
-        context = service.get_default_context()
+        context = service.get_default_context(withpid=False)
 
         full_path = os.path.join(self.filename.format(**context))
         templated_path = os.path.splitext(full_path)[0]
