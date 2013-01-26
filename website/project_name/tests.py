@@ -4,7 +4,7 @@ from {{ project_name }} import models
 class {{ project_name }}Tests(ExtendedTestCase):
     def signup_user(self):
         users = models.User.objects.count()
-        self.post("/signup/", {"email": "user{}@example.com".format(users), "password": "foobar", "deck": "0"})
+        self.post("/signup/", {"email": "user{}@example.com".format(users), "password": "foobar"})
         return models.User.objects.get(id=users+1)
 
     def test_404(self):
@@ -17,7 +17,8 @@ class {{ project_name }}Tests(ExtendedTestCase):
         self.assertStatus(200, '/login/')
 
     def test_logout(self):
-        self.assertStatus(200, '/logout/')
+        response = self.get('/logout/')
+        self.assertRedirects(response, '/')
 
     def test_signup(self):
         self.assertStatus(200, '/signup/')
