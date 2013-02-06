@@ -1,5 +1,6 @@
 from coffin.shortcuts import render_to_response
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, logout as logout_user, login as login_user
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -113,4 +114,42 @@ def account(request):
         message = "Settings successfully updated."
 
     return r2r("settings.jinja", request, locals())
+
+def password_reset(request, is_admin_site=False,
+                   template_name='registration/password_reset_form.html',
+                   email_template_name='registration/password_reset_email.html',
+                   subject_template_name='registration/password_reset_subject.txt',
+                   post_reset_redirect=None,
+                   from_email=None,
+                   extra_context=None):
+
+    from {{project_name}}.forms import PasswordResetForm as password_reset_form
+    from django.contrib.auth.tokens import default_token_generator as token_generator
+
+    if post_reset_redirect is None:
+        post_reset_redirect = reverse('django.contrib.auth.views.password_reset_done')
+    if request.method == "POST":
+        form = password_reset_form(request.POST)
+        if form.is_valid():
+            opts = {
+                'use_https': request.is_secure(),
+                'token_generator': token_generator,
+                'from_email': from_email,
+                'email_template_name': email_template_name,
+                'subject_template_name': subject_template_name,
+                'request': request,
+            }
+            form.save(**opts)
+            return redirect(post_reset_redirect)
+    else:
+        form = password_reset_form()
+    context = { 'form': form }
+    if extra_context is not None:
+        context.update(extra_context)
+    return r2r(template_name, request, context)
+
+def password_reset_done(request):
+    message = "We've e-mailed you your username and instructions for resetting your password to the e-mail address you submitted. You should be receiving it shortly."
+    messages.success(request, message)
+    return redirect('home')
 

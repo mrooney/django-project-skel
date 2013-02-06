@@ -1,4 +1,11 @@
 {% extends "base.jinja" %}
+{% block extra_css %}
+<style type="text/css">
+    a.forgot {
+        font-size: 0.8em;
+    }
+</style>
+{% endblock %}
 {% block content %}
     <h1>Login</h1>
     <div class="container well">
@@ -11,6 +18,7 @@
                 <input type="checkbox"> Remember me
             </label>#}
             <button type="submit" class="btn">Sign in</button>
+            <a class="forgot" href="{% url password_reset %}">forgot password?</a>
         </form>
     </div>
 {% endblock %}

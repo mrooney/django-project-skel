@@ -201,8 +201,10 @@ else:
 AUTH_PROFILE_MODULE = "{{project_name}}.UserProfile"
 LOGIN_URL = "/login"
 
+WEBSITE_NAME = "{{ project_name }}"
+from settings_deploy import SERVICES
 if DEBUG:
-    WEBSITE_URL = "http://localhost"
+    WEBSITE_URL = "http://localhost:{}".format(SERVICES['nginx']['port'])
 else:
     WEBSITE_URL = "http://example.com"
 

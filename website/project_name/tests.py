@@ -25,3 +25,6 @@ class {{ project_name }}Tests(ExtendedTestCase):
         user = self.signup_user()
         self.assertEqual(1, user.id)
 
+    def test_password_reset(self):
+        self.assertStatus(200, '/password_reset')
+
