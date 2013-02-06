@@ -189,13 +189,14 @@ if DEBUG:
     DEFAULT_FROM_EMAIL = "mrooney@gmail.com"
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
-    DEFAULT_FROM_EMAIL = "contact@example.com"
+    DEFAULT_FROM_EMAIL = "mrooney@gmail.com"
     EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
     EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
     EMAIL_PORT = 465
-    EMAIL_HOST_USER = 'YOUR_SMTP_USERNAME'
-    EMAIL_HOST_PASSWORD = 'YOUR_SMTP_PASSWORD'
     EMAIL_USE_TLS = True
+    AWS_CREDENTIALS_PATH = os.path.join(WEBSITE_DIR, 'aws.credentials')
+    if os.path.exists(AWS_CREDENTIALS_PATH):
+        EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = open(AWS_CREDENTIALS_PATH).read().splitlines()
 
 
 AUTH_PROFILE_MODULE = "{{project_name}}.UserProfile"
