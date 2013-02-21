@@ -20,6 +20,9 @@ def r2r(template, request, data=None):
     data = data or {}
     return render_to_response(template, data, context_instance=RequestContext(request))
 
+def is_valid_email(email):
+    return True if email_re.match(email) else False
+
 def superuser_required(function):
     def _inner(request, *args, **kwargs):
         if not request.user.is_superuser:
@@ -67,7 +70,7 @@ def signup(request):
     else:
         email = request.POST['email']
         password = request.POST['password']
-        if not email_re.match(email):
+        if not is_valid_email(email):
             error_msg = "Please enter a valid email address."
             return r2r("signup.jinja", request, locals())
         if len(password) < 6:
