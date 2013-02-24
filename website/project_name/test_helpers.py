@@ -1,8 +1,9 @@
 from django.utils import unittest
 import django.test
 from django.test.client import Client
-from lxml import html, etree
-from lxml.cssselect import CSSSelector
+
+from lxml import html
+from cssselect import HTMLTranslator
 
 class NotOkay(Exception):
     def __init__(self, response):
@@ -29,7 +30,7 @@ class ExtendedTestCase(django.test.TestCase):
     def get_client(cls, user=None):
         client = Client()
         if user:
-            client.login(username=user.username, password="foobar")
+            assert client.login(username=user.username, password="foobar")
         return client
     
     @classmethod
@@ -76,8 +77,9 @@ class ExtendedTestCase(django.test.TestCase):
         return html.fromstring(response.content)
 
     def css_select(self, response, css_selector):
-        sel = css_selector if isinstance(css_selector, CSSSelector) else CSSSelector(css_selector)
-        return [e for e in sel(self.parse_response(response))]
+        document = self.parse_response(response)
+        expression = HTMLTranslator().css_to_xpath(css_selector)
+        return document.xpath(expression)
 
     def assertNumCssMatches(self, num, response, css_selector):
         found = len(self.css_select(response, css_selector))
