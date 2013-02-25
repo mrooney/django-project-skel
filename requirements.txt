@@ -15,4 +15,5 @@ django_compressor
 BeautifulSoup<4.0
 django-nose
 django-smtp-ssl
+python-memcached
 # add your application-specific requirements here:

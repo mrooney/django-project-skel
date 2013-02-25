@@ -16,5 +16,10 @@ SERVICES = {
             "after": ["./after_deploy.sh"],
             "restart": ["kill", "-s", "SIGHUP", "{pid}"],
         },
+    "memcached":
+        {
+            "pidfile": "{project_dir}/run/memcached.pid",
+            "start": ["memcached", "-d", "-m", "24", "-s", "{project_dir}/run/memcached.sock", "-P", "{project_dir}/run/memcached.pid"],
+        }
 }
 

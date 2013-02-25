@@ -175,6 +175,13 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'unix:{0}/run/memcached.sock'.format(WEBSITE_DIR),
+    }
+}
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '{{ secret_key }}'
 
