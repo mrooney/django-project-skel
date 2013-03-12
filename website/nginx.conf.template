@@ -18,7 +18,7 @@ http {{
     }}
 
     server {{
-        listen   *:{port};
+        listen {port} default_server;
 
         location /favicon.ico {{
             return 204;
