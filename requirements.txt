@@ -4,7 +4,7 @@ Coffin
 jinja2
 South
 gevent
-gunicorn
+gunicorn==0.14.6
 raven
 python-cjson
 lxml
