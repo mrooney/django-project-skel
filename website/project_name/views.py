@@ -1,9 +1,8 @@
 from coffin.shortcuts import render_to_response
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, logout as logout_user, login as login_user
+from django.contrib.auth import authenticate, logout as logout_user, login as login_user, get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.core.validators import email_re
@@ -65,6 +64,7 @@ def logout(request):
     return redirect("home")
 
 def signup(request):
+    usermodel = get_user_model()
     if request.method == "GET":
         return r2r("signup.jinja", request, locals())
     else:
@@ -76,34 +76,30 @@ def signup(request):
         if len(password) < 6:
             error_msg = "Please enter a password of at least 6 characters."
             return r2r("signup.jinja", request, locals())
-        if User.objects.filter(username=email).count():
+        if usermodel.objects.filter(username=email).count():
             error_msg = "An account with this email address already exists."
             return r2r("signup.jinja", request, locals())
 
-        user = User.objects.create_user(email, email, password=password)
+        user = usermodel.objects.create_user(email, email, password=password)
         user.save()
-        profile = models.UserProfile.objects.create(user=user)
         user = authenticate(username=email, password=password)
         login_user(request, user)
 
         # Send email confirmation.
         email_confirm_url = reverse('email_confirm', args=[str(uuid.uuid4())])
         msg = "Thanks for signing up for {{project_name}}!\n\nPlease confirm your email address by clicking the following link: {0}{1}. You won't be able to receive further emails from us until confirming your address.\n\nIf you didn't sign up, take no action, and this is the last email you'll receive from us.\n\nThanks,\n{0}".format(settings.WEBSITE_URL, email_confirm_url)
-        profile.email_user("Welcome to {{project_name}}", msg, ignore_confirmed=True)
+        user.email_user("Welcome to {{project_name}}", msg, ignore_confirmed=True)
 
         return redirect("home")
 
 @login_required
 def email_confirm(request, token):
-    profile = request.user.get_profile()
-    profile.email_confirmed = True
-    profile.save()
+    request.user.email_confirmed = True
+    request.user.save()
     return r2r("email_confirmed.jinja", request, locals())
 
 @login_required
 def account(request):
-    profile = request.user.get_profile()
-
     if request.method == "POST":
         pw1 = request.POST['password1']
         pw2 = request.POST['password2']

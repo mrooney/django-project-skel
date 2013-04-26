@@ -16,6 +16,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# the meta nginx.conf handles this for us.
+ALLOWED_HOSTS = ['*']
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -206,8 +209,8 @@ else:
         EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = open(AWS_CREDENTIALS_PATH).read().splitlines()
 
 
-AUTH_PROFILE_MODULE = "{{project_name}}.UserProfile"
-LOGIN_URL = "/login"
+AUTH_USER_MODEL = "{{project_name}}.User"
+LOGIN_URL = "login"
 
 WEBSITE_NAME = "{{ project_name }}"
 from settings_deploy import SERVICES

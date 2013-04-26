@@ -2,7 +2,7 @@ from django import forms
 from django.template import loader
 from django.utils.http import int_to_base36
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.conf import settings
@@ -23,7 +23,7 @@ class PasswordResetForm(forms.Form):
         Validates that an active user exists with the given email address.
         """
         email = self.cleaned_data["email"]
-        self.users_cache = User.objects.filter(email__iexact=email,
+        self.users_cache = get_user_model().objects.filter(email__iexact=email,
                                                is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
@@ -55,6 +55,6 @@ class PasswordResetForm(forms.Form):
             # Email subject *must not* contain newlines
             subject = ''.join(subject.splitlines())
             email = loader.render_to_string(email_template_name, c)
-            user.get_profile().email_user(subject, email)
+            user.email_user(subject, email)
 
 

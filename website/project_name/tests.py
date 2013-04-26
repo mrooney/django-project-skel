@@ -1,11 +1,14 @@
+from django.contrib.auth import get_user_model
+
 from {{ project_name }}.test_helpers import ExtendedTestCase
 from {{ project_name }} import models
 
 class {{ project_name }}Tests(ExtendedTestCase):
     def signup_user(self):
-        users = models.User.objects.count()
+        model = get_user_model()
+        users = model.objects.count()
         self.post("/signup/", {"email": "user{}@example.com".format(users), "password": "foobar"})
-        return models.User.objects.get(id=users+1)
+        return model.objects.get(id=users+1)
 
     def test_404(self):
         self.assertStatus(404, '/foobar/')

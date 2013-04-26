@@ -23,4 +23,3 @@ atlassian-ide-plugin.xml
 nginx.conf
 settings_gunicorn.py
 uploads
-run
