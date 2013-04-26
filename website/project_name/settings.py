@@ -209,7 +209,7 @@ else:
         EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = open(AWS_CREDENTIALS_PATH).read().splitlines()
 
 
-AUTH_USER_MODEL = "{{project_name}}.User"
+AUTH_USER_MODEL = "{{project_name}}.CustomUser"
 LOGIN_URL = "login"
 
 WEBSITE_NAME = "{{ project_name }}"
