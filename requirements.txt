@@ -3,7 +3,6 @@ django==1.5.1
 Coffin
 jinja2
 South
-gevent
 gunicorn==0.17.2
 raven
 python-cjson
