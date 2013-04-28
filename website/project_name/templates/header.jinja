@@ -1,0 +1,24 @@
+<div id="header" class="navbar navbar-top">
+  <div class="navbar-inner">
+    <div class="container container-full-width">
+      <a href="/" class="brand nav-text">{{ project_name }}</a>
+
+      <ul class="nav pull-right" style="margin-left:0;">
+        <li class="vendor-apply">
+          <a class="btn" href="/rooms/new">Apply as a Vendor</a>
+        </li>
+      </ul>
+
+      <ul class="nav pull-right logged-out nav-text">
+        <li><a href="{% url "signup" %}">Sign Up</a></li>
+        <li><a href="{% url "login" %}">Log In</a></li>
+      </ul>
+
+      <ul class="nav pull-right logged-in nav-text">
+        <li><a href="/account">Account</a></li>
+        <li><a href="/logout" id="header-logout">Log Out</a></li>
+        <li class="divider-vertical"></li>
+      </ul>
+    </div>
+  </div>
+</div>
