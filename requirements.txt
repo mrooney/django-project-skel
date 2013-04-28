@@ -15,4 +15,7 @@ BeautifulSoup<4.0
 django-nose
 django-smtp-ssl
 python-memcached
+Pillow
+django-forms-bootstrap
+sorl-thumbnail
 # add your application-specific requirements here:

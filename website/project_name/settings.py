@@ -134,6 +134,8 @@ INSTALLED_APPS = (
     'gunicorn',
     'compressor',
     'django_nose',
+    'django_forms_bootstrap',
+    'sorl.thumbnail',
     '{{ project_name }}',
 )
 if not (DEBUG or TESTING):
