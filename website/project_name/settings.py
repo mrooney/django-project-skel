@@ -148,8 +148,8 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 SENTRY_DSN_PATH = os.path.join(WEBSITE_DIR, 'sentry.dsn')
 if not os.path.exists(SENTRY_DSN_PATH):
     print "!!! WARNING SENTRY_DSN_PATH does not exist; no Sentry logging can occur !!!"
-elif not DEBUG:
-    SENTRY_DSN = open(SENTRY_DSN_PATH).read()
+else:
+    SENTRY_DSN = open(SENTRY_DSN_PATH).read().strip()
 
 LOGGING = {
     'version': 1,
