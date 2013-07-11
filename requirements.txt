@@ -1,6 +1,6 @@
 # base requirements:
 django==1.5.1
-Coffin
+Coffin>=0.3.8
 jinja2
 South
 gunicorn==0.17.2
