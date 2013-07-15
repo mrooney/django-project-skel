@@ -3,7 +3,7 @@ django==1.5.1
 Coffin>=0.3.8
 jinja2
 South
-gunicorn==0.17.2
+gunicorn==17.5
 raven
 python-cjson
 lxml
