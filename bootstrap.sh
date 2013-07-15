@@ -12,4 +12,5 @@ chmod +x deploy.py before_deploy.sh after_deploy.sh
 cd ..
 git init .
 git add .
+git add -f website/run/.gitignore
 git commit -am "initial commit"
