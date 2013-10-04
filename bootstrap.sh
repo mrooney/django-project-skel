@@ -8,7 +8,7 @@ chmod +x website/manage.py
 cd website
 ./manage.py schemamigration {{project_name}} --initial
 chmod +x deploy.py before_deploy.sh after_deploy.sh
-./deploy.py
+pbdeploy
 cd ..
 git init .
 git add .
