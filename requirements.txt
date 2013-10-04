@@ -1,5 +1,5 @@
 # base requirements:
-django==1.5.1
+django==1.5.4
 Coffin>=0.3.8
 jinja2
 South
