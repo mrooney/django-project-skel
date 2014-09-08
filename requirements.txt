@@ -10,7 +10,7 @@ django-forms-bootstrap
 django-nose
 django-smtp-ssl
 django_compressor
-gunicorn
+gunicorn==17.5
 jinja2
 lxml
 pbdeploy==1.8
