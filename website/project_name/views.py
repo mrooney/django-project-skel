@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, logout as logout_user, login as lo
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseServerError
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseServerError
 from django.shortcuts import redirect
 from django.template import RequestContext
 
@@ -36,11 +36,6 @@ def superuser_required(function):
             raise PermissionDenied
         return function(request, *args, **kwargs)
     return _inner
-
-def json_response(func):
-    def decorated(*args, **kwargs):
-        return HttpResponse(cjson.encode(func(*args, **kwargs)), mimetype="application/json")
-    return decorated
 
 def home(request):
     return r2r("index.jinja", request)

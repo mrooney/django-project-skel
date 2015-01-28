@@ -1,8 +1,6 @@
 # base requirements:
 BeautifulSoup<4.0
-Coffin
 Pillow
-South
 bpython
 cssselect
 django
@@ -18,4 +16,6 @@ python-cjson
 python-memcached
 raven
 sorl-thumbnail
+pytz
+django-jinja
 # add your application-specific requirements here:
