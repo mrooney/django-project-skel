@@ -1,4 +1,3 @@
-from coffin.shortcuts import render_to_response
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, logout as logout_user, login as login_user, get_user_model
@@ -6,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, JsonResponse, HttpResponseForbidden, HttpResponseServerError
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render_to_response
 from django.template import RequestContext
 
 import cjson

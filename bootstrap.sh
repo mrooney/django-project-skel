@@ -6,7 +6,7 @@ pip install -r requirements.txt
 mv manage.py website
 chmod +x website/manage.py
 cd website
-./manage.py schemamigration {{project_name}} --initial
+./manage.py makemigrations {{project_name}}
 chmod +x before_deploy.sh after_deploy.sh
 pbdeploy
 cd ..

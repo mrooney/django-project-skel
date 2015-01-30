@@ -1,4 +1,4 @@
-from coffin.conf.urls import *
+from django.conf.urls import *
 from django.conf import settings
 from django.contrib import admin
 from django.core.urlresolvers import reverse_lazy

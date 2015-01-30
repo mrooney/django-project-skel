@@ -82,9 +82,10 @@ STATICFILES_FINDERS = (
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
+    'django_jinja.loaders.FileSystemLoader',
+    'django_jinja.loaders.AppLoader',
 )
+DEFAULT_JINJA2_TEMPLATE_EXTENSION = '.jinja'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -130,10 +131,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'south',
     'gunicorn',
     'compressor',
     'django_nose',
+    'django_jinja',
     'django_forms_bootstrap',
     'sorl.thumbnail',
     '{{ project_name }}',

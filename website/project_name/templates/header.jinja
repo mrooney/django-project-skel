@@ -4,8 +4,8 @@
       <a href="/" class="navbar-brand nav-text">PROJECT_NAME</a>
 
       <ul class="nav pull-right logged-out nav-text">
-        <li><a href="{% url "signup" %}">Sign Up</a></li>
-        <li><a href="{% url "login" %}">Log In</a></li>
+        <li><a href="{{ url("signup") }}">Sign Up</a></li>
+        <li><a href="{{ url("login") }}">Log In</a></li>
       </ul>
 
       <ul class="nav pull-right logged-in nav-text">
