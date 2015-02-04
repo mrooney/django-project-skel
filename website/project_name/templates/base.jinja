@@ -8,8 +8,8 @@
         <title>{% block title %}TITLE{% endblock %}</title>
         {% load compress %}
         {% compress css %}
-            <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.1.1-dist/css/bootstrap.min.css" />
-            <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" />
+            <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.2-dist/css/bootstrap.min.css" />
+            <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.2-dist/css/bootstrap-theme.min.css" />
             <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
         {% endcompress %}
         {# compress extra_css in a separate block so changes in local page CSS don't blow the entire cache, yet local pages don't have to send down the entire CSS each time #}
@@ -38,8 +38,8 @@
         </div>
 
         {% compress js %}
-            <script src="/static/js/jquery-1.11.0.min.js"></script>
-            <script src="/static/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
+            <script src="/static/js/jquery-1.11.2.min.js"></script>
+            <script src="/static/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
             <script src="/static/js/javascript.js"></script>
         {% endcompress %}
         {% block extra_js %}{% endblock %}
