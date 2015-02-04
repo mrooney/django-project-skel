@@ -114,7 +114,7 @@ def account(request):
                 error = "Passwords do not match."
         message = "Settings successfully updated."
 
-    return r2r("settings.jinja", request, locals())
+    return r2r("account.jinja", request, locals())
 
 def password_reset(request, is_admin_site=False,
                    template_name='registration/password_reset_form.html',

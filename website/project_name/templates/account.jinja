@@ -8,7 +8,7 @@
         {% elif message %}
             <p class="text-success">{{ message }}</p>
         {% endif %}
-        <form class="form-horizontal" action="{% url settings %}" method="post">
+        <form class="form-horizontal" action="{{ url("settings") }}" method="post">
             {% csrf_token %}
             <div class="control-group">
                 <label class="control-label" for="password1">Change Password:</label>

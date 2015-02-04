@@ -196,6 +196,11 @@ JINJA2_EXTENSIONS = [
 ]
 COMPRESS_ENABLED = True
 COMPRESS_PARSER = 'compressor.parser.LxmlParser'
+import jinja2
+from django_forms_bootstrap.templatetags.bootstrap_tags import as_bootstrap, as_bootstrap_inline, as_bootstrap_horizontal
+jinja2.filters.FILTERS['as_bootstrap'] = as_bootstrap
+jinja2.filters.FILTERS['as_bootstrap_inline'] = as_bootstrap_inline
+jinja2.filters.FILTERS['as_bootstrap_horizontal'] = as_bootstrap_horizontal
 
 if DEBUG:
     # Show emails in the console during developement.
