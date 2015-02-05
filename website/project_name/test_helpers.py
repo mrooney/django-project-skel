@@ -1,3 +1,4 @@
+import cjson
 from django.utils import unittest
 import django.test
 from django.test.client import Client
@@ -12,23 +13,27 @@ class NotOkay(Exception):
         self.status = response.status_code
 
 class ExtendedTestCase(django.test.TestCase):
-    def after_setUp(self):
-        """ Override this to do extra setup. """
+    def setUp(self):
+        ExtendedTestCase.client = None
+
+    @classmethod
+    def persist_client(cls):
+        cls.client = cls.get_client()
     
-    def before_tearDown(self):
-        """ Override this to do extra tear-down. """
-        
     def assertStatus(self, status, path, **kwargs):
         try:
             response = self.get(path, **kwargs)
         except NotOkay, no:
             response = no.response
-            
         self.assertEqual(status, response.status_code)
+            
+    def assertNumCssMatches(self, num, response, css_selector):
+        found = len(self.css_select(response, css_selector))
+        self.assertEqual(num, found, "Expected {0} but found {1}.".format(num, found))
         
     @classmethod
     def get_client(cls, user=None):
-        client = Client()
+        client = cls.client or Client()
         if user:
             assert client.login(username=user.username, password="foobar")
         return client
@@ -49,19 +54,24 @@ class ExtendedTestCase(django.test.TestCase):
         return cls._http_verb('get', path, client=client, **kwargs)
 
     @classmethod
-    def post(cls, path, data=None, client=None, **kwargs):
+    def post(cls, path, data=None, client=None, as_string=False, **kwargs):
         data = data or {}
+        if as_string:
+            data = cjson.encode(data)
+            kwargs['content_type'] = 'application/json'
+
         return cls._http_verb('post', path, data=data, client=client, **kwargs)
 
     @classmethod
-    def _api_call(cls, path, data=None, client=None, method="post"):
+    def _api_call(cls, path, data=None, client=None, method='post', **kwargs):
         data = data or {}
         response = getattr(cls, method)(path,
-                                        data=util.dumps(data),
+                                        data=cjson.encode(data),
                                         client=client,
-                                        content_type="application/json")
+                                        content_type='application/json',
+                                        **kwargs)
         try:
-            content = util.loads(response.content)
+            content = cjson.decode(response.content)
         except ValueError:
             # Probably not a JSON response, so just return a string.
             content = response.content
@@ -70,6 +80,10 @@ class ExtendedTestCase(django.test.TestCase):
     @classmethod
     def api_post(cls, *args, **kwargs):
         return cls._api_call(*args, **kwargs)
+
+    @classmethod
+    def api_get(cls, *args, **kwargs):
+        return cls._api_call(*args, method='get', **kwargs)
 
     def parse_response(self, response):
         if isinstance(response, basestring):
@@ -80,8 +94,4 @@ class ExtendedTestCase(django.test.TestCase):
         document = self.parse_response(response)
         expression = HTMLTranslator().css_to_xpath(css_selector)
         return document.xpath(expression)
-
-    def assertNumCssMatches(self, num, response, css_selector):
-        found = len(self.css_select(response, css_selector))
-        self.assertEqual(num, found, "Expected {0} but found {1}.".format(num, found))
 
