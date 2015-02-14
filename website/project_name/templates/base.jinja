@@ -24,8 +24,8 @@
         <div class="container" id="main" role="main">
             <div class="message-container">
                 {% for message in messages %}
-                    <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
-                        <a class="close" data-dismiss="alert" href="#">&times;</a>
+                    <div{% if message.tags %} role="alert" class="alert alert-dismissable alert-{{ message.tags.replace("error", "danger") }}"{% endif %}>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         {{ message }}
                     </div>
                 {% endfor %}

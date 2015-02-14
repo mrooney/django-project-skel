@@ -7,6 +7,7 @@ WEBSITE_DIR = os.path.dirname(PROJECT_DIR)
 PUBLIC_DIR = os.path.join(WEBSITE_DIR, 'public')
 
 DEBUG = sys.platform == 'darwin'
+TASTYPIE_FULL_DEBUG = DEBUG
 TESTING = 'test' in sys.argv
 TEMPLATE_DEBUG = True
 
@@ -156,15 +157,16 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'logfile': {
-            'class': 'logging.handlers.WatchedFileHandler',
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
             'filename': os.path.join(WEBSITE_DIR, 'run', 'gunicorn.log'),
         },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['logfile'],
-            'level': 'INFO',
+            'handlers': ['file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
