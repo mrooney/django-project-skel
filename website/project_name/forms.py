@@ -1,6 +1,6 @@
 from django import forms
 from django.template import loader
-from django.utils.http import int_to_base36
+from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
@@ -26,7 +26,7 @@ class PasswordResetForm(forms.Form):
                                                is_active=True)
         if not len(self.users_cache):
             raise forms.ValidationError(self.error_messages['unknown'])
-        if any(user.has_unusable_password() for user in self.users_cache):
+        if not all(user.has_usable_password() for user in self.users_cache):
             raise forms.ValidationError(self.error_messages['unusable'])
         return email
 
@@ -44,7 +44,7 @@ class PasswordResetForm(forms.Form):
                 'email': user.email,
                 'domain': settings.WEBSITE_URL,
                 'site_name': settings.WEBSITE_NAME,
-                'uid': int_to_base36(user.id),
+                'uid': urlsafe_base64_encode(unicode(user.id)),
                 'user': user,
                 'token': token_generator.make_token(user),
                 'protocol': settings.WEBSITE_URL.split("://")[0],
